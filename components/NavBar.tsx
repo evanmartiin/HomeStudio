@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, Button, Alert } from 'react-native';
+import { StyleSheet, Text, View, Button, Image } from 'react-native';
 
 class NavBar extends React.Component {
 
@@ -10,9 +10,18 @@ class NavBar extends React.Component {
     render() {
         return(
             <View style={styles.container}>
-                <View style={styles.item}><Button title="Accueil" onPress={() => {this._menu("Accueil")}} /></View>
-                <View style={styles.item}><Button title="Ajouter" onPress={() => {this._menu("Ajouter")}} /></View>
-                <View style={styles.item}><Button title="Profil" onPress={() => {this._menu("Profil")}} /></View>
+                <View style={styles.item}> 
+                  <Image style={styles.accueil} source={require('../assets/accueil.png')} onPress={() => {this._menu("Accueil")}} />
+                </View>
+
+                <View style={styles.item}> 
+                  <Image style={styles.accueil} source={require('../assets/ajouter.png')} onPress={() => {this._menu("Ajouter")}} />
+                </View>
+
+                <View style={styles.item}> 
+                  <Image style={styles.accueil} source={require('../assets/automatique.png')} onPress={() => {this._menu("Profil")}} />
+                </View>
+          
             </View>
         )
     }
@@ -24,7 +33,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     width: '100%',
-    height: '10%',
+    height: '65px',
     backgroundColor: 'lightgray',
     flex: 1,
     flexDirection: 'row',
@@ -36,6 +45,10 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center'
+  },  
+  accueil: {
+    width: "30px",
+    height: "30px",
   },
 });
 

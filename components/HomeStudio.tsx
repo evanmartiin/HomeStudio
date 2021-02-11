@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View, Image, Switch } from 'react-native';
-import NavBar from './NavBar';
+
 
 interface MyProps {
 
@@ -77,7 +77,6 @@ class HomeStudio extends React.Component<MyProps, MyState> {
                     value={this.state.ChambreSwitch === "ON" ? true : false}
                 />
                 <StatusBar style="auto" />
-                <NavBar />
             </View>
         )
     }
@@ -86,6 +85,8 @@ class HomeStudio extends React.Component<MyProps, MyState> {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        height: "100%",
+        marginBottom : "65px",
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
