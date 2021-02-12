@@ -14,22 +14,22 @@ export default function TopApp() {
 
 const styles = StyleSheet.create({
     logoTopApp: {
-        width: "100px",
-        height: "60px",
+        width: 100,
+        height: 60,
     },
 
     imgUser: {
-        width: "30px",
-        height: "30px",
+        width: 30,
+        height: 30,
     },
 
     flexTopApp: {
         display: "flex",
-        flexDirection: "initial",
+        flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        marginBottom: "15px",
+        marginBottom: 15,
         backgroundColor: "#EFEFEF",
-        padding: "15px",
+        padding: 15,
     }
 });

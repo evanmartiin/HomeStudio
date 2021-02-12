@@ -1,31 +1,28 @@
 import React from 'react'
-import { StyleSheet, Text, View, Button, Image } from 'react-native';
+import { StyleSheet, TouchableOpacity, View, Image, Alert } from 'react-native';
 
 class NavBar extends React.Component {
+  _menu = (message: string) => {
+    Alert.alert(message, "Cette fonctionnalité n'est pas encore disponible.");
+  }
 
-    _menu = (message: string) => {
-        alert(message);
-    }
-    
-    render() {
-        return(
-            <View style={styles.container}>
-                <View style={styles.item}> 
-                  <Image style={styles.accueil} source={require('../assets/accueil.png')} onPress={() => {this._menu("Accueil")}} />
-                </View>
+  render() {
+    return (
+      <View style={styles.container}>
+        <View style={styles.item}>
+          <TouchableOpacity onPress={() => this._menu('Accueil')}><Image style={styles.accueil} source={require('../assets/accueil.png')} /></TouchableOpacity>
+        </View>
 
-                <View style={styles.item}> 
-                  <Image style={styles.accueil} source={require('../assets/ajouter.png')} onPress={() => {this._menu("Ajouter")}} />
-                </View>
+        <View style={styles.item}>
+          <TouchableOpacity onPress={() => this._menu('Ajouter')}><Image style={styles.accueil} source={require('../assets/ajouter.png')} /></TouchableOpacity>
+        </View>
 
-                <View style={styles.item}> 
-                  <Image style={styles.accueil} source={require('../assets/automatique.png')} onPress={() => {this._menu("Profil")}} />
-                </View>
-          
-            </View>
-        )
-    }
-
+        <View style={styles.item}>
+          <TouchableOpacity onPress={() => this._menu('Mode Automatique')}><Image style={styles.accueil} source={require('../assets/automatique.png')} /></TouchableOpacity>
+        </View>
+      </View>
+    )
+  }
 }
 
 const styles = StyleSheet.create({
@@ -33,7 +30,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     width: '100%',
-    height: '65px',
+    height: 65,
     backgroundColor: 'lightgray',
     flex: 1,
     flexDirection: 'row',
@@ -45,12 +42,11 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center'
-  },  
+  },
   accueil: {
-    width: "30px",
-    height: "30px",
+    width: 30,
+    height: 30,
   },
 });
-
 
 export default NavBar
