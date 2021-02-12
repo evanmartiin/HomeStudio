@@ -1,7 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View, Image, Switch, Alert } from 'react-native';
-import NavBar from './NavBar';
 import ShakeEventExpo from './ShakeEventExpo';
 
 interface MyProps {
@@ -16,7 +15,6 @@ interface MyState {
 }
 
 class HomeStudio extends React.Component<MyProps, MyState> {
-
     constructor(props: MyProps) {
         super(props);
         this.state = {
@@ -29,7 +27,7 @@ class HomeStudio extends React.Component<MyProps, MyState> {
 
     async componentDidMount() {
         ShakeEventExpo.addListener(() => {
-            if(!this.state.isAlertPresent) {
+            if (!this.state.isAlertPresent) {
                 this.setState({ isAlertPresent: true });
                 Alert.alert(
                     "Éteindre",
@@ -140,12 +138,11 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         height: "100%",
-        marginBottom : 65,
+        marginBottom: 65,
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
     },
 });
-
 
 export default HomeStudio

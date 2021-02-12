@@ -5,17 +5,17 @@ import TopApp from './components/TopApp';
 import NavBar from './components/NavBar';
 
 export default function App() {
-  return (
-    <View style={styles.maxHeight}>
-      <TopApp />
-      <HomeStudio />
-      <NavBar />
-    </View>
-  );
+    return (
+        <View style={styles.maxHeight}>
+            <TopApp />
+            <HomeStudio />
+            <NavBar />
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
-  maxHeight: {
-      height: "100%",
-  }
+    maxHeight: {
+        height: "100%",
+    }
 });

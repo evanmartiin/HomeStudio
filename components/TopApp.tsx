@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, Image, View } from 'react-native';
+import { StyleSheet, Image, View } from 'react-native';
 
 export default function TopApp() {
     return (
@@ -17,12 +17,10 @@ const styles = StyleSheet.create({
         width: 100,
         height: 60,
     },
-
     imgUser: {
         width: 30,
         height: 30,
     },
-
     flexTopApp: {
         display: "flex",
         flexDirection: "row",
