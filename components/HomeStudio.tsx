@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View, Image, Switch, Alert } from 'react-native';
+import { StyleSheet, Text, View, Image, Switch, Alert, Button } from 'react-native';
 import ShakeEventExpo from './ShakeEventExpo';
 
 interface MyProps {
@@ -11,6 +11,9 @@ interface MyState {
     SalonSwitch: string,
     GarageSwitch: string,
     ChambreSwitch: string,
+    RGBSwitch: string,
+    RGB2Switch: string,
+    RGB3Switch: string,
     isAlertPresent: boolean
 }
 
@@ -21,6 +24,9 @@ class HomeStudio extends React.Component<MyProps, MyState> {
             SalonSwitch: "OFF",
             GarageSwitch: "OFF",
             ChambreSwitch: "OFF",
+            RGBSwitch: "OFF",
+            RGB2Switch: "OFF",
+            RGB3Switch: "OFF",
             isAlertPresent: false
         }
     }
@@ -128,6 +134,41 @@ class HomeStudio extends React.Component<MyProps, MyState> {
                     }}
                     value={this.state.ChambreSwitch === "ON" ? true : false}
                 />
+                <View style={styles.rgb}>
+                    <Text>Rouge</Text>
+                    <Switch
+                        trackColor={{ false: "#767577", true: "#767577" }}
+                        thumbColor={this.state.RGBSwitch === "ON" ? "#f5dd4b" : "#f4f3f4"}
+                        ios_backgroundColor="#3e3e3e"
+                        onValueChange={() => {
+                            this.state.RGBSwitch === "ON" ? this.lightManager("RGB", "OFF") : this.lightManager("RGB", "ON");
+                            this.state.RGBSwitch === "ON" ? this.setState({ RGBSwitch: "OFF" }) : this.setState({ RGBSwitch: "ON" });
+                        }}
+                        value={this.state.RGBSwitch === "ON" ? true : false}
+                    />
+                    <Text>Vert</Text>
+                    <Switch
+                        trackColor={{ false: "#767577", true: "#767577" }}
+                        thumbColor={this.state.RGB2Switch === "ON" ? "#f5dd4b" : "#f4f3f4"}
+                        ios_backgroundColor="#3e3e3e"
+                        onValueChange={() => {
+                            this.state.RGB2Switch === "ON" ? this.lightManager("RGB2", "OFF") : this.lightManager("RGB2", "ON");
+                            this.state.RGB2Switch === "ON" ? this.setState({ RGB2Switch: "OFF" }) : this.setState({ RGB2Switch: "ON" });
+                        }}
+                        value={this.state.RGB2Switch === "ON" ? true : false}
+                    />
+                    <Text>Bleu</Text>
+                    <Switch
+                        trackColor={{ false: "#767577", true: "#767577" }}
+                        thumbColor={this.state.RGB3Switch === "ON" ? "#f5dd4b" : "#f4f3f4"}
+                        ios_backgroundColor="#3e3e3e"
+                        onValueChange={() => {
+                            this.state.RGB3Switch === "ON" ? this.lightManager("RGB3", "OFF") : this.lightManager("RGB3", "ON");
+                            this.state.RGB3Switch === "ON" ? this.setState({ RGB3Switch: "OFF" }) : this.setState({ RGB3Switch: "ON" });
+                        }}
+                        value={this.state.RGB3Switch === "ON" ? true : false}
+                    />
+                </View>
                 <StatusBar style="auto" />
             </View>
         )
@@ -143,6 +184,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    rgb: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        margin: 0,
+        padding: 0
+    }
 });
 
 export default HomeStudio
