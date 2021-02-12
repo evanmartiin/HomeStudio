@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View, Image, Switch } from 'react-native';
+import { StyleSheet, Text, View, Image, Switch, Alert } from 'react-native';
 import NavBar from './NavBar';
 import ShakeEventExpo from './ShakeEventExpo';
 
@@ -11,7 +11,8 @@ interface MyProps {
 interface MyState {
     SalonSwitch: string,
     GarageSwitch: string,
-    ChambreSwitch: string
+    ChambreSwitch: string,
+    isAlertPresent: boolean
 }
 
 class HomeStudio extends React.Component<MyProps, MyState> {
@@ -22,19 +23,43 @@ class HomeStudio extends React.Component<MyProps, MyState> {
             SalonSwitch: "OFF",
             GarageSwitch: "OFF",
             ChambreSwitch: "OFF",
+            isAlertPresent: false
         }
     }
 
     async componentDidMount() {
         ShakeEventExpo.addListener(() => {
-            this.lightManager("Salon", "OFF");
-            this.setState({ SalonSwitch: "OFF" });
-            this.lightManager("Garage", "OFF");
-            this.setState({ GarageSwitch: "OFF" });
-            this.lightManager("Chambre", "OFF");
-            this.setState({ ChambreSwitch: "OFF" });
+            if(!this.state.isAlertPresent) {
+                this.setState({ isAlertPresent: true });
+                Alert.alert(
+                    "Éteindre",
+                    "Voulez-vous éteindre toutes les lumières ?",
+                    [
+                        {
+                            text: "Annuler",
+                            style: "cancel",
+                            onPress: () => {
+                                this.setState({ isAlertPresent: false });
+                            }
+                        },
+                        {
+                            text: "Confirmer",
+                            onPress: () => {
+                                this.lightManager("Salon", "OFF");
+                                this.setState({ SalonSwitch: "OFF" });
+                                this.lightManager("Garage", "OFF");
+                                this.setState({ GarageSwitch: "OFF" });
+                                this.lightManager("Chambre", "OFF");
+                                this.setState({ ChambreSwitch: "OFF" });
+                                this.setState({ isAlertPresent: false });
+                            }
+                        }
+                    ],
+                    { cancelable: false }
+                );
+            }
         });
-        
+
         // var xhr = new XMLHttpRequest();
         // xhr.open("POST", 'http://mmidomotique.ddns.net/controleLedChambre.php', true);
 
