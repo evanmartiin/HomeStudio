@@ -55,6 +55,12 @@ class HomeStudio extends React.Component<MyProps, MyState> {
                                 this.setState({ GarageSwitch: "OFF" });
                                 this.lightManager("Chambre", "OFF");
                                 this.setState({ ChambreSwitch: "OFF" });
+                                this.lightManager("RGB", "OFF");
+                                this.setState({ RGBSwitch: "OFF" });
+                                this.lightManager("RGB2", "OFF");
+                                this.setState({ RGB2Switch: "OFF" });
+                                this.lightManager("RGB3", "OFF");
+                                this.setState({ RGB3Switch: "OFF" });
                                 this.setState({ isAlertPresent: false });
                             }
                         }
@@ -100,7 +106,7 @@ class HomeStudio extends React.Component<MyProps, MyState> {
     render() {
         return (
             <View style={styles.container}>
-                <Image source={{ uri: 'http://mmidomotique.ddns.net:8081/', cache: 'reload' }} style={{ width: 320, height: 240 }} />
+                <Image source={{ uri: 'http://mmidomotique.ddns.net:8081/', cache: 'reload' }} style={{ width: 384, height: 216 }} />
                 <Text>Salon</Text>
                 <Switch
                     trackColor={{ false: "#767577", true: "#767577" }}
