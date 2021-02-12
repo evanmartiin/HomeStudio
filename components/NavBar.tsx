@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, TouchableOpacity, View, Image, Alert } from 'react-native';
 
 class NavBar extends React.Component {
-    _menu = (message: string) => {
+    _menu = (message: string) => { // Fonction affichant une alerte personnalisée, pour chaque fonctionnalité non-développée du menu
         Alert.alert(message, "Cette fonctionnalité n'est pas encore disponible.");
     }
 

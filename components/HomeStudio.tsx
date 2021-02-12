@@ -7,7 +7,7 @@ interface MyProps {
 
 }
 
-interface MyState {
+interface MyState { // Initialisation des variables globales et de la nature de l'information qu'elle contient (syntaxe TypeScript)
     SalonSwitch: string,
     GarageSwitch: string,
     ChambreSwitch: string,
@@ -20,7 +20,7 @@ interface MyState {
 class HomeStudio extends React.Component<MyProps, MyState> {
     constructor(props: MyProps) {
         super(props);
-        this.state = {
+        this.state = { // Initialisation des valeurs par défaut de chaque variable globale définie précédemment
             SalonSwitch: "OFF",
             GarageSwitch: "OFF",
             ChambreSwitch: "OFF",
@@ -31,23 +31,23 @@ class HomeStudio extends React.Component<MyProps, MyState> {
         }
     }
 
-    async componentDidMount() {
-        ShakeEventExpo.addListener(() => {
-            if (!this.state.isAlertPresent) {
+    async componentDidMount() { // Lorsque le composant a été ajouté au DOM virtuel, on lance une fonction
+        ShakeEventExpo.addListener(() => { // Détection lorsqu'on secoue son téléphone, via la librairie expo-sensors
+            if (!this.state.isAlertPresent) { // Vérification si une alerte est déjà présente sur l'écran, pour ne pas surcharger
                 this.setState({ isAlertPresent: true });
                 Alert.alert(
                     "Éteindre",
                     "Voulez-vous éteindre toutes les lumières ?",
                     [
                         {
-                            text: "Annuler",
+                            text: "Annuler", // Bouton pour annuler l'extinction totale des lumières
                             style: "cancel",
                             onPress: () => {
                                 this.setState({ isAlertPresent: false });
                             }
                         },
                         {
-                            text: "Confirmer",
+                            text: "Confirmer", // Bouton pour confirmer l'extinction totale des lumières
                             onPress: () => {
                                 this.lightManager("Salon", "OFF");
                                 this.setState({ SalonSwitch: "OFF" });
@@ -70,6 +70,8 @@ class HomeStudio extends React.Component<MyProps, MyState> {
             }
         });
 
+        // Code semi-fonctionnel pour récupérer l'état des LEDs, en cours de développement...
+
         // var xhr = new XMLHttpRequest();
         // xhr.open("POST", 'http://mmidomotique.ddns.net/controleLedChambre.php', true);
 
@@ -84,26 +86,26 @@ class HomeStudio extends React.Component<MyProps, MyState> {
         // xhr.send("executer=state");
     }
 
-    componentWillUnmount() {
+    componentWillUnmount() { // Lorsque le composant va être retiré du DOM virtuel, on désactive la détection des mouvements du téléphone
         ShakeEventExpo.removeListener();
     }
 
-    lightManager = async (room: string, mode: string) => {
+    lightManager = async (room: string, mode: string) => { // Fonction gérant les modes ON/OFF de chaque LED individuellement
         var xhr = new XMLHttpRequest();
-        xhr.open("POST", 'http://mmidomotique.ddns.net/controleLed' + room + '.php', true);
+        xhr.open("POST", 'http://mmidomotique.ddns.net/controleLed' + room + '.php', true); // Définition de la cible de la requête Http
 
         //Envoie les informations du header adaptées avec la requête
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded"); // Déclaration du type de contenu envoyé dans la requête
 
-        xhr.onreadystatechange = function () { //Appelle une fonction au changement d'état.
-            if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+        xhr.onreadystatechange = function () {
+            if (this.readyState === XMLHttpRequest.DONE && this.status === 200) { // Lorsque la requête a abouti et que le serveur distant a confirmé la réception
                 console.log('Lumière de "' + room + '" : ' + mode);
             }
         }
-        xhr.send("executer=" + mode);
+        xhr.send("executer=" + mode); // Envoi final de la requête, contenant les données à envoyer
     }
 
-    render() {
+    render() { // Vue de l'application
         return (
             <View style={styles.container}>
                 <Image source={{ uri: 'http://mmidomotique.ddns.net:8081/', cache: 'reload' }} style={{ width: 384, height: 216 }} />
