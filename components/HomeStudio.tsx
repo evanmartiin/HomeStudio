@@ -1,7 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View, Image, Switch } from 'react-native';
-
+import { StyleSheet, Text, View, Image, Switch, Alert } from 'react-native';
+import NavBar from './NavBar';
+import ShakeEventExpo from './ShakeEventExpo';
 
 interface MyProps {
 
@@ -10,7 +11,8 @@ interface MyProps {
 interface MyState {
     SalonSwitch: string,
     GarageSwitch: string,
-    ChambreSwitch: string
+    ChambreSwitch: string,
+    isAlertPresent: boolean
 }
 
 class HomeStudio extends React.Component<MyProps, MyState> {
@@ -21,7 +23,59 @@ class HomeStudio extends React.Component<MyProps, MyState> {
             SalonSwitch: "OFF",
             GarageSwitch: "OFF",
             ChambreSwitch: "OFF",
+            isAlertPresent: false
         }
+    }
+
+    async componentDidMount() {
+        ShakeEventExpo.addListener(() => {
+            if(!this.state.isAlertPresent) {
+                this.setState({ isAlertPresent: true });
+                Alert.alert(
+                    "Éteindre",
+                    "Voulez-vous éteindre toutes les lumières ?",
+                    [
+                        {
+                            text: "Annuler",
+                            style: "cancel",
+                            onPress: () => {
+                                this.setState({ isAlertPresent: false });
+                            }
+                        },
+                        {
+                            text: "Confirmer",
+                            onPress: () => {
+                                this.lightManager("Salon", "OFF");
+                                this.setState({ SalonSwitch: "OFF" });
+                                this.lightManager("Garage", "OFF");
+                                this.setState({ GarageSwitch: "OFF" });
+                                this.lightManager("Chambre", "OFF");
+                                this.setState({ ChambreSwitch: "OFF" });
+                                this.setState({ isAlertPresent: false });
+                            }
+                        }
+                    ],
+                    { cancelable: false }
+                );
+            }
+        });
+
+        // var xhr = new XMLHttpRequest();
+        // xhr.open("POST", 'http://mmidomotique.ddns.net/controleLedChambre.php', true);
+
+        // //Envoie les informations du header adaptées avec la requête
+        // xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+        // xhr.onreadystatechange = function () { //Appelle une fonction au changement d'état.
+        //     if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+        //         console.log(xhr.response);
+        //     }
+        // }
+        // xhr.send("executer=state");
+    }
+
+    componentWillUnmount() {
+        ShakeEventExpo.removeListener();
     }
 
     lightManager = async (room: string, mode: string) => {
@@ -42,7 +96,7 @@ class HomeStudio extends React.Component<MyProps, MyState> {
     render() {
         return (
             <View style={styles.container}>
-                <Image style={{width: 320, height: 240}} source={{uri: 'http://mmidomotique.ddns.net:8081/'}}/>
+                <Image source={{ uri: 'http://mmidomotique.ddns.net:8081/', cache: 'reload' }} style={{ width: 320, height: 240 }} />
                 <Text>Salon</Text>
                 <Switch
                     trackColor={{ false: "#767577", true: "#767577" }}
